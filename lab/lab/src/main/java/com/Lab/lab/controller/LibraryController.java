@@ -13,9 +13,9 @@ public class LibraryController {
     @Autowired
     private IlibraryService ilibaryService;
     @GetMapping("getlibrary/{id}")
-    public Library findLibrary(@PathVariable int id)
+    public Library findById(@PathVariable int id)
     {
-        return ilibaryService.getLibrary(id);
+        return ilibaryService.findById(id);
     }
 
     @GetMapping("/getAlllibarary")
@@ -37,7 +37,7 @@ public class LibraryController {
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable int id)
     {
-        ilibaryService.deleteLibarryByid(id);
+        ilibaryService.deleteByid(id);
     }
 
 }

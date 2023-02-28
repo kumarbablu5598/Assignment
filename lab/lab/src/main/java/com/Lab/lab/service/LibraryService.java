@@ -1,6 +1,8 @@
 package com.Lab.lab.service;
 
 import com.Lab.lab.model.Library;
+import com.Lab.lab.repo.LibraryRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,34 +11,31 @@ import java.util.List;
 @Service
 public class LibraryService implements IlibraryService {
     private static List<Library> libr = new ArrayList<>();
-    static {
-        libr.add(new Library(10,"labrary1","patna"));
-        libr.add(new Library(20,"labrary2","gaya"));
-        libr.add(new Library(30,"labrary3","kolkata"));
+   @Autowired
+    private LibraryRepo libraryRepo;
+    @Override
+    public  List<Library> findAll() {
+        return libraryRepo.findAll();
+    }
+    @Override
+    public Library findById(int id){
+        return  libraryRepo.findById(id).get();
 
     }
     @Override
-    public  List<Library> findAll() {
-        return libr;
-    }
-    @Override
-    public Library getLibrary(int id){
-        Library lb=libr.get(id);
-        return lb;
-    }
-    @Override
     public void addLibrary(Library librarydetails){
-        libr.add(librarydetails);
+        libraryRepo.save(librarydetails);
     }
     @Override
-    public void deleteLibarryByid(int LibararyId){
-        libr.remove(LibararyId);
+    public void deleteByid(int LibararyId){
+        libraryRepo.deleteById(LibararyId);
     }
     @Override
     public  void updateById(int LibararyId,Library library) {
-        Library upatelibrary = getLibrary(LibararyId);
+        Library upatelibrary = libraryRepo.findById(LibararyId).get();
         upatelibrary.setLibraryAddress(library.getLibraryAddress());
         upatelibrary.setLibraryName(library.getLibraryName());
+        libraryRepo.save(upatelibrary);
 
     }
 
